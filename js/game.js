@@ -16,6 +16,8 @@ let enemies = [];
 let score = 0;
 let timeLeft = 60;
 let gameOver = false;
+let combo = 0;
+let comboTimer = 0;
 
 function createEnemies(){
 
@@ -43,6 +45,13 @@ createEnemies();
 setInterval(()=>{
 
     if(!gameOver){
+
+        if(comboTimer > 0){
+            comboTimer--;
+        }
+        else{
+            combo = 0;
+        }
 
         timeLeft--;
 
@@ -140,7 +149,21 @@ function checkCollisions(){
         ){
 
             //addscore
+            combo++;
+        comboTimer = 2;
+
+        if(combo >= 5){
+
+            score += 100;
+        }
+        else if(combo >= 3){
+
+            score += 50;
+        }
+        else{
+
             score += 10;
+        }
 
             // RANDOM PUSH EFFECT
             enemy.x = Math.random() * 900;
@@ -207,6 +230,7 @@ function gameLoop(){
     ctx.font = "30px Arial";
     ctx.fillText("Score: " + score, 20, 40);
     ctx.fillText("Time: " + timeLeft, 20, 80);
+    ctx.fillText("Combo: " + combo, 20, 120);
 
     if(gameOver){
 
