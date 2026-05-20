@@ -13,6 +13,7 @@ let player = {
 
 //kalaban
 let enemies = [];
+let score = 0;
 
 function createEnemies(){
 
@@ -37,7 +38,6 @@ function createEnemies(){
 //kalabanjapon
 createEnemies();
 
-// KEYBOARD INPUT
 let keys = {};
 
 document.addEventListener("keydown", (e)=>{
@@ -87,7 +87,7 @@ function movePlayer(){
 
 //sakalaban
 function moveEnemies(){
-
+    
     enemies.forEach(enemy => {
 
         enemy.x += enemy.speedX;
@@ -103,6 +103,37 @@ function moveEnemies(){
         }
     });
 }
+
+function checkCollisions(){
+
+    enemies.forEach(enemy => {
+
+        if(
+            player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + player.height > enemy.y
+        ){
+
+            //addscore
+            score += 10;
+
+            // RANDOM PUSH EFFECT
+            enemy.x = Math.random() * 900;
+            enemy.y = Math.random() * 500;
+
+            //player
+            player.color = "yellow";
+
+            setTimeout(()=>{
+                player.color = "cyan";
+            },100);
+        }
+
+    });
+
+}
+
 
 //player
 function drawPlayer(){
@@ -142,9 +173,15 @@ function gameLoop(){
 
     moveEnemies();
 
+    checkCollisions();
+
     drawPlayer();
 
     drawEnemies();
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Score: " + score, 20, 40);
 
     requestAnimationFrame(gameLoop);
 }
