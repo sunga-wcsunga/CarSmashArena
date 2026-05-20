@@ -14,6 +14,8 @@ let player = {
 //kalaban
 let enemies = [];
 let score = 0;
+let timeLeft = 60;
+let gameOver = false;
 
 function createEnemies(){
 
@@ -38,6 +40,20 @@ function createEnemies(){
 //kalabanjapon
 createEnemies();
 
+setInterval(()=>{
+
+    if(!gameOver){
+
+        timeLeft--;
+
+        if(timeLeft <= 0){
+            gameOver = true;
+        }
+
+    }
+
+},1000);
+
 let keys = {};
 
 document.addEventListener("keydown", (e)=>{
@@ -50,6 +66,10 @@ document.addEventListener("keyup", (e)=>{
 
 //movement
 function movePlayer(){
+
+    if(gameOver){
+        return;
+    }
 
     if(keys["w"] || keys["ArrowUp"]){
         player.y -= player.speed;
@@ -67,7 +87,7 @@ function movePlayer(){
         player.x += player.speed;
     }
 
-    // WALL COLLISION
+    //smashin
     if(player.x < 0){
         player.x = 0;
     }
@@ -87,13 +107,17 @@ function movePlayer(){
 
 //sakalaban
 function moveEnemies(){
+
+    if(gameOver){
+        return;
+    }
     
     enemies.forEach(enemy => {
 
         enemy.x += enemy.speedX;
         enemy.y += enemy.speedY;
 
-        // BOUNCE WALLS
+        //wallbounce
         if(enemy.x <= 0 || enemy.x + enemy.width >= canvas.width){
             enemy.speedX *= -1;
         }
@@ -122,7 +146,7 @@ function checkCollisions(){
             enemy.x = Math.random() * 900;
             enemy.y = Math.random() * 500;
 
-            //player
+            //crashcolor
             player.color = "yellow";
 
             setTimeout(()=>{
@@ -182,6 +206,20 @@ function gameLoop(){
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
     ctx.fillText("Score: " + score, 20, 40);
+    ctx.fillText("Time: " + timeLeft, 20, 80);
+
+    if(gameOver){
+
+    ctx.fillStyle = "white";
+    ctx.font = "60px Arial";
+
+    ctx.fillText(
+        "GAME OVER",
+        300,
+        300
+    );
+
+}
 
     requestAnimationFrame(gameLoop);
 }
