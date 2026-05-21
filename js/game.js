@@ -3,11 +3,19 @@ const ctx = canvas.getContext("2d");
 
 //player
 let player = {
+
     x: 450,
     y: 250,
     width: 50,
     height: 80,
-    speed: 5,
+    speed: 0,
+    maxSpeed: 6,
+    acceleration: 0.2,
+    friction: 0.96,
+    angle: 0,
+    turnSpeed: 0.05,
+    avoidTimer: 0,
+    avoidAngle: 0,
     color: "cyan"
 };
 
@@ -46,6 +54,8 @@ let barriers = [
 
 function createEnemies(){
 
+    
+
     for(let i = 0; i < 5; i++){
 
         enemies.push({
@@ -56,7 +66,10 @@ function createEnemies(){
             width: 50,
             height: 80,
 
-            speed: 2 + Math.random() * 2,
+           speed: 2 + Math.random() * 2,
+
+            angle: Math.random() * Math.PI * 2,
+            turnSpeed: 0.05,
 
             color: "red"
         });
@@ -104,38 +117,63 @@ function movePlayer(){
         return;
     }
 
+    //forward
     if(keys["w"] || keys["ArrowUp"]){
-        player.y -= player.speed;
+        player.speed += player.acceleration;
     }
 
+    //backward
     if(keys["s"] || keys["ArrowDown"]){
-        player.y += player.speed;
+        player.speed -= player.acceleration;
     }
 
+    //speedlimit
+    if(player.speed > player.maxSpeed){
+        player.speed = player.maxSpeed;
+    }
+
+    if(player.speed < -player.maxSpeed / 2){
+        player.speed = -player.maxSpeed / 2;
+    }
+
+    //leftturn
     if(keys["a"] || keys["ArrowLeft"]){
-        player.x -= player.speed;
+        player.angle -= player.turnSpeed;
     }
 
+    //rightturn
     if(keys["d"] || keys["ArrowRight"]){
-        player.x += player.speed;
+        player.angle += player.turnSpeed;
     }
 
-    //smashin
+    //forward
+    player.x += Math.cos(player.angle) * player.speed;
+    player.y += Math.sin(player.angle) * player.speed;
+
+    //friction
+    player.speed *= player.friction;
+
+    // outerwalls
     if(player.x < 0){
         player.x = 0;
+        player.speed *= -0.5;
     }
 
     if(player.y < 0){
         player.y = 0;
+        player.speed *= -0.5;
     }
 
     if(player.x + player.width > canvas.width){
         player.x = canvas.width - player.width;
+        player.speed *= -0.5;
     }
 
     if(player.y + player.height > canvas.height){
         player.y = canvas.height - player.height;
+        player.speed *= -0.5;
     }
+
 }
 
 function checkBarrierCollision(){
@@ -149,23 +187,12 @@ function checkBarrierCollision(){
             player.y + player.height > barrier.y
         ){
 
-            //wallcrash
-            if(keys["w"] || keys["ArrowUp"]){
-                player.y += player.speed;
-            }
+            //bounce
+            player.speed *= -0.5;
 
-            if(keys["s"] || keys["ArrowDown"]){
-                player.y -= player.speed;
-            }
-
-            if(keys["a"] || keys["ArrowLeft"]){
-                player.x += player.speed;
-            }
-
-            if(keys["d"] || keys["ArrowRight"]){
-                player.x -= player.speed;
-            }
-
+            //push
+            player.x -= Math.cos(player.angle) * 10;
+            player.y -= Math.sin(player.angle) * 10;
         }
 
     });
@@ -181,42 +208,69 @@ function moveEnemies(){
 
     enemies.forEach(enemy => {
 
-        //distance
-        let dx = enemy.x - player.x;
-        let dy = enemy.y - player.y;
+        let targetAngle;
 
-        let distance = Math.sqrt(dx * dx + dy * dy);
+        //avoidance
+        if(enemy.avoidTimer > 0){
 
-        //direction
-        if(distance > 0){
+            targetAngle = enemy.avoidAngle;
 
-            dx /= distance;
-            dy /= distance;
+            enemy.avoidTimer--;
+        }
+
+        else {
+
+            //runaway
+            let dx = enemy.x - player.x;
+            let dy = enemy.y - player.y;
+
+            targetAngle = Math.atan2(dy, dx);
 
         }
 
-        //escaping
-        enemy.x += dx * enemy.speed;
-        enemy.y += dy * enemy.speed;
+        //rotation
+        let angleDifference = targetAngle - enemy.angle;
 
-        //outerwallcollision
+        //cleanangle
+        angleDifference = Math.atan2(
+            Math.sin(angleDifference),
+            Math.cos(angleDifference)
+        );
+
+        //turn
+        if(angleDifference > 0){
+            enemy.angle += enemy.turnSpeed;
+        }
+        else{
+            enemy.angle -= enemy.turnSpeed;
+        }
+
+        //forward
+        enemy.x += Math.cos(enemy.angle) * enemy.speed;
+        enemy.y += Math.sin(enemy.angle) * enemy.speed;
+
+        //outerwalls
         if(enemy.x < 0){
             enemy.x = 0;
+            enemy.angle += Math.PI;
         }
 
         if(enemy.y < 0){
             enemy.y = 0;
+            enemy.angle += Math.PI;
         }
 
         if(enemy.x + enemy.width > canvas.width){
             enemy.x = canvas.width - enemy.width;
+            enemy.angle += Math.PI;
         }
 
         if(enemy.y + enemy.height > canvas.height){
             enemy.y = canvas.height - enemy.height;
+            enemy.angle += Math.PI;
         }
 
-        //avoidbarriers
+        //barriersmash
         barriers.forEach(barrier => {
 
             if(
@@ -226,9 +280,17 @@ function moveEnemies(){
                 enemy.y + enemy.height > barrier.y
             ){
 
+                //avoidance
+                enemy.avoidTimer = 40;
+
+                //rndmescape
+                enemy.avoidAngle =
+                    enemy.angle +
+                    (Math.random() * Math.PI - Math.PI / 2);
+
                 //pushback
-                enemy.x -= dx * 10;
-                enemy.y -= dy * 10;
+                enemy.x -= Math.cos(enemy.angle) * 10;
+                enemy.y -= Math.sin(enemy.angle) * 10;
             }
 
         });
@@ -284,14 +346,28 @@ function checkCollisions(){
 //player
 function drawPlayer(){
 
+    ctx.save();
+
+    //center
+    ctx.translate(
+        player.x + player.width / 2,
+        player.y + player.height / 2
+    );
+
+    //rotate
+    ctx.rotate(player.angle + Math.PI / 2);
+
+    //drawcar
     ctx.fillStyle = player.color;
 
     ctx.fillRect(
-        player.x,
-        player.y,
+        -player.width / 2,
+        -player.height / 2,
         player.width,
         player.height
     );
+
+    ctx.restore();
 }
 
 //kalaban
@@ -299,15 +375,31 @@ function drawEnemies(){
 
     enemies.forEach(enemy => {
 
+        ctx.save();
+
+        //movecenter
+        ctx.translate(
+            enemy.x + enemy.width / 2,
+            enemy.y + enemy.height / 2
+        );
+
+        //rotate
+        ctx.rotate(enemy.angle);
+
+        //draw
         ctx.fillStyle = enemy.color;
 
         ctx.fillRect(
-            enemy.x,
-            enemy.y,
+            -enemy.width / 2,
+            -enemy.height / 2,
             enemy.width,
             enemy.height
         );
+
+        ctx.restore();
+
     });
+
 }
 
 function drawBarriers(){
