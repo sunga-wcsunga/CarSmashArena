@@ -19,6 +19,31 @@ let gameOver = false;
 let combo = 0;
 let comboTimer = 0;
 
+let barriers = [
+
+    {
+        x: 300,
+        y: 150,
+        width: 200,
+        height: 40
+    },
+
+    {
+        x: 100,
+        y: 350,
+        width: 40,
+        height: 180
+    },
+
+    {
+        x: 700,
+        y: 250,
+        width: 150,
+        height: 40
+    }
+
+];
+
 function createEnemies(){
 
     for(let i = 0; i < 5; i++){
@@ -31,8 +56,7 @@ function createEnemies(){
             width: 50,
             height: 80,
 
-            speedX: (Math.random() * 4) - 2,
-            speedY: (Math.random() * 4) - 2,
+            speed: 2 + Math.random() * 2,
 
             color: "red"
         });
@@ -114,27 +138,103 @@ function movePlayer(){
     }
 }
 
+function checkBarrierCollision(){
+
+    barriers.forEach(barrier => {
+
+        if(
+            player.x < barrier.x + barrier.width &&
+            player.x + player.width > barrier.x &&
+            player.y < barrier.y + barrier.height &&
+            player.y + player.height > barrier.y
+        ){
+
+            //wallcrash
+            if(keys["w"] || keys["ArrowUp"]){
+                player.y += player.speed;
+            }
+
+            if(keys["s"] || keys["ArrowDown"]){
+                player.y -= player.speed;
+            }
+
+            if(keys["a"] || keys["ArrowLeft"]){
+                player.x += player.speed;
+            }
+
+            if(keys["d"] || keys["ArrowRight"]){
+                player.x -= player.speed;
+            }
+
+        }
+
+    });
+
+}
+
 //sakalaban
 function moveEnemies(){
 
     if(gameOver){
         return;
     }
-    
+
     enemies.forEach(enemy => {
 
-        enemy.x += enemy.speedX;
-        enemy.y += enemy.speedY;
+        //distance
+        let dx = enemy.x - player.x;
+        let dy = enemy.y - player.y;
 
-        //wallbounce
-        if(enemy.x <= 0 || enemy.x + enemy.width >= canvas.width){
-            enemy.speedX *= -1;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        //direction
+        if(distance > 0){
+
+            dx /= distance;
+            dy /= distance;
+
         }
 
-        if(enemy.y <= 0 || enemy.y + enemy.height >= canvas.height){
-            enemy.speedY *= -1;
+        //escaping
+        enemy.x += dx * enemy.speed;
+        enemy.y += dy * enemy.speed;
+
+        //outerwallcollision
+        if(enemy.x < 0){
+            enemy.x = 0;
         }
+
+        if(enemy.y < 0){
+            enemy.y = 0;
+        }
+
+        if(enemy.x + enemy.width > canvas.width){
+            enemy.x = canvas.width - enemy.width;
+        }
+
+        if(enemy.y + enemy.height > canvas.height){
+            enemy.y = canvas.height - enemy.height;
+        }
+
+        //avoidbarriers
+        barriers.forEach(barrier => {
+
+            if(
+                enemy.x < barrier.x + barrier.width &&
+                enemy.x + enemy.width > barrier.x &&
+                enemy.y < barrier.y + barrier.height &&
+                enemy.y + enemy.height > barrier.y
+            ){
+
+                //pushback
+                enemy.x -= dx * 10;
+                enemy.y -= dy * 10;
+            }
+
+        });
+
     });
+
 }
 
 function checkCollisions(){
@@ -150,22 +250,21 @@ function checkCollisions(){
 
             //addscore
             combo++;
-        comboTimer = 2;
+            comboTimer = 2;
 
-        if(combo >= 5){
+            if(combo >= 5){
+               score += 100;
+            }
 
-            score += 100;
-        }
-        else if(combo >= 3){
+            else if(combo >= 3){
+                score += 50;
+            }
 
-            score += 50;
-        }
-        else{
+            else{
+                score += 10;
+            }
 
-            score += 10;
-        }
-
-            // RANDOM PUSH EFFECT
+            //rndmpush
             enemy.x = Math.random() * 900;
             enemy.y = Math.random() * 500;
 
@@ -211,12 +310,31 @@ function drawEnemies(){
     });
 }
 
+function drawBarriers(){
+
+    barriers.forEach(barrier => {
+
+        ctx.fillStyle = "gray";
+
+        ctx.fillRect(
+            barrier.x,
+            barrier.y,
+            barrier.width,
+            barrier.height
+        );
+
+    });
+
+}
+
 //loop
 function gameLoop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     movePlayer();
+
+    checkBarrierCollision();
 
     moveEnemies();
 
@@ -225,6 +343,8 @@ function gameLoop(){
     drawPlayer();
 
     drawEnemies();
+
+    drawBarriers();
 
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
