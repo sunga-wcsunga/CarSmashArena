@@ -1,9 +1,27 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+const menu = document.getElementById("menu");
+const classicButton = document.getElementById("classicButton");
+const survivalButton = document.getElementById("survivalButton");
+
+let gameMode = "classic";
+
+//modeclassic
+classicButton.addEventListener("click", ()=>{
+    gameMode = "classic";
+    menu.style.display = "none";
+    gameStarted = true;
+});
+
+//modesurvival
+survivalButton.addEventListener("click", ()=>{
+    gameMode = "survival";
+    menu.style.display = "none";
+    gameStarted = true;
+});
 
 //player
 let player = {
-
     x: 450,
     y: 250,
     width: 50,
@@ -23,6 +41,7 @@ let enemies = [];
 let score = 0;
 let timeLeft = 60;
 let gameOver = false;
+let gameStarted = false;
 let combo = 0;
 let comboTimer = 0;
 
@@ -52,8 +71,6 @@ let barriers = [
 ];
 
 function createEnemies(){
-
-    
 
     for(let i = 0; i < 5; i++){
 
@@ -122,17 +139,17 @@ function movePlayer(){
         return;
     }
 
-    // TURN LEFT
+    //leftturn
     if(keys["a"] || keys["ArrowLeft"]){
         player.angle -= player.turnSpeed;
     }
 
-    // TURN RIGHT
+    //rightturn
     if(keys["d"] || keys["ArrowRight"]){
         player.angle += player.turnSpeed;
     }
 
-    // MOVE FORWARD
+    //forward
     if(keys["w"] || keys["ArrowUp"]){
 
         player.velocityX = Math.cos(player.angle) * player.moveSpeed;
@@ -142,17 +159,16 @@ function movePlayer(){
     }
     else{
 
-        // SLOW DOWN
+        //slowdown
         player.velocityX *= 0.90;
         player.velocityY *= 0.90;
-
     }
 
-    // APPLY MOVEMENT
+    //movement
     player.x += player.velocityX;
     player.y += player.velocityY;
 
-    // OUTER WALLS
+    //outerwalls
     if(player.x < 0){
         player.x = 0;
         player.velocityX = 0;
@@ -186,11 +202,11 @@ function checkBarrierCollision(){
             player.y + player.height > barrier.y
         ){
 
-            // STOP MOVEMENT
+            //atopmovement
             player.velocityX = 0;
             player.velocityY = 0;
 
-            // PUSH PLAYER OUT
+            //pushbackplayer
             player.x -= Math.cos(player.angle) * 10;
             player.y -= Math.sin(player.angle) * 10;
         }
@@ -212,9 +228,7 @@ function moveEnemies(){
 
         //avoidance
         if(enemy.avoidTimer > 0){
-
             targetAngle = enemy.avoidAngle;
-
             enemy.avoidTimer--;
         }
 
@@ -223,9 +237,7 @@ function moveEnemies(){
             //runaway
             let dx = enemy.x - player.x;
             let dy = enemy.y - player.y;
-
             targetAngle = Math.atan2(dy, dx);
-
         }
 
         //rotation
@@ -241,17 +253,16 @@ function moveEnemies(){
         if(angleDifference > 0){
             enemy.angle += enemy.turnSpeed;
         }
+
         else{
             enemy.angle -= enemy.turnSpeed;
         }
 
         //forward
-        enemy.velocityX += Math.cos(enemy.angle) * 0.15;
-        enemy.velocityY += Math.sin(enemy.angle) * 0.15;
-
+        enemy.velocityX += Math.cos(enemy.angle) * 0.35;
+        enemy.velocityY += Math.sin(enemy.angle) * 0.35;
         enemy.x += enemy.velocityX;
         enemy.y += enemy.velocityY;
-
         enemy.velocityX *= 0.97;
         enemy.velocityY *= 0.97;
 
@@ -297,7 +308,6 @@ function moveEnemies(){
                 //pushback
                 enemy.x -= Math.cos(enemy.angle) * 10;
                 enemy.y -= Math.sin(enemy.angle) * 10;
-
                 enemy.velocityX = 0;
                 enemy.velocityY = 0;
             }
@@ -318,10 +328,9 @@ function checkCollisions(){
             player.y < enemy.y + enemy.height &&
             player.y + player.height > enemy.y
         ){
-
             //addscore
             combo++;
-            comboTimer = 2;
+            comboTimer = 5;
 
             if(combo >= 5){
                score += 100;
@@ -364,7 +373,6 @@ function checkCollisions(){
 
 //player
 function drawPlayer(){
-
     ctx.save();
 
     //center
@@ -393,7 +401,6 @@ function drawPlayer(){
 function drawEnemies(){
 
     enemies.forEach(enemy => {
-
         ctx.save();
 
         //movecenter
@@ -424,7 +431,6 @@ function drawEnemies(){
 function drawBarriers(){
 
     barriers.forEach(barrier => {
-
         ctx.fillStyle = "gray";
 
         ctx.fillRect(
@@ -443,18 +449,17 @@ function gameLoop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
+    if(!gameStarted){
+        requestAnimationFrame(gameLoop);
+        return;
+    }
+
     movePlayer();
-
     checkBarrierCollision();
-
     moveEnemies();
-
     checkCollisions();
-
     drawPlayer();
-
     drawEnemies();
-
     drawBarriers();
 
     ctx.fillStyle = "white";
@@ -464,17 +469,16 @@ function gameLoop(){
     ctx.fillText("Combo: " + combo, 20, 120);
 
     if(gameOver){
+        ctx.fillStyle = "white";
+        ctx.font = "60px Arial";
 
-    ctx.fillStyle = "white";
-    ctx.font = "60px Arial";
+        ctx.fillText(
+            "GAME OVER",
+            300,
+            300
+        );
 
-    ctx.fillText(
-        "GAME OVER",
-        300,
-        300
-    );
-
-}
+    }
 
     requestAnimationFrame(gameLoop);
 }
