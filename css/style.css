@@ -110,3 +110,19 @@ canvas {
     box-shadow: 0 0 15px cyan;
 
 }
+
+#hud{
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    margin-top: 20px;
+    margin-bottom: 15px;
+
+    font-size: 24px;
+
+    font-weight: bold;
+}

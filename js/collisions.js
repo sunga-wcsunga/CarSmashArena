@@ -40,13 +40,13 @@ function checkCollisions() {
             //mode:survival
             else if(gameMode === "survival"){
 
-                // DIRECTION TO ENEMY
+                //direction
                 let dx = enemy.x - player.x;
                 let dy = enemy.y - player.y;
 
                 let collisionAngle = Math.atan2(dy, dx);
 
-                // PLAYER FACING CHECK
+                //playerfacing
                 let playerDifference =
                     collisionAngle - player.angle;
 
@@ -57,7 +57,7 @@ function checkCollisions() {
 
                     );
 
-                // ENEMY FACING PLAYER
+                //enemyfacingplayer
                 let enemyToPlayerAngle =
                     Math.atan2(
                         player.y - enemy.y,
@@ -74,14 +74,14 @@ function checkCollisions() {
 
                     );
 
-                // FRONT CHECKS
+                //frontchecks
                 let playerFront =
                     Math.abs(playerDifference) < 1;
 
                 let enemyFront =
                     Math.abs(enemyDifference) < 1;
 
-                // HEAD-ON CRASH
+                //headsoncrash
                 if(playerFront && enemyFront){
 
                     player.velocityX -=
@@ -98,14 +98,14 @@ function checkCollisions() {
 
                 }
 
-                // PLAYER ATTACK
+                //playerattack
                 else if(playerFront && !enemyFront){
 
                     score += 25;
 
                 }
 
-                // ENEMY ATTACK
+                //enemyattack
                 else if(enemyFront && !playerFront){
 
                     playerHealth -= 20;

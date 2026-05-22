@@ -39,7 +39,7 @@ setInterval(()=> {
 
         }
 
-            //mode:survival
+        //mode:survival
         else if(gameMode === "survival") {
 
             survivalTime++;
@@ -71,40 +71,85 @@ function gameLoop() {
     drawEnemies();
     drawBarriers();
 
-    ctx.fillStyle = "white";
-    ctx.font = "30px Arial";
-    ctx.fillText("Score: " + score, 20, 40);
-    
-    if(gameMode === "classic") {
-
-    ctx.fillText("Time: " + timeLeft, 20, 80);
-
-    }
-
-    else if(gameMode === "survival") {
-
-        ctx.fillText("Survival: " + survivalTime, 20, 80);
-        ctx.fillText("Health: " + playerHealth, 20, 120);
-
-    }
-
-    ctx.fillText("Combo: " + combo, 20, 160);
-
     if(gameOver) {
 
         ctx.fillStyle = "white";
-        ctx.font = "60px Arial";
+
+        ctx.textAlign = "center";
+
+        ctx.font = "70px Arial";
 
         ctx.fillText(
-
             "GAME OVER",
-            300,
-            300
+            canvas.width / 2,
+            280
         );
+
+        ctx.font = "35px Arial";
+
+        if(gameMode === "classic"){
+
+            ctx.fillText(
+                "Final Score: " + score,
+                canvas.width / 2,
+                340
+            );
+
+        }
+
+        else if(gameMode === "survival"){
+
+            ctx.fillText(
+                "Score: " + score,
+                canvas.width / 2,
+                340
+            );
+
+            ctx.fillText(
+                "Survived: " + survivalTime + "s",
+                canvas.width / 2,
+                390
+            );
+
+        }
+
+    }
+
+    ctx.textAlign = "left";
+
+    document.getElementById("scoreText").innerText =
+        "Score: " + score;
+
+    document.getElementById("comboText").innerText =
+        "Combo: " + combo;
+
+    if(gameMode === "classic"){
+
+        document.getElementById("timeText").innerText =
+            "Time: " + timeLeft;
+
+        document.getElementById("healthText").style.display =
+            "none";
+
+    }
+
+    else if(gameMode === "survival"){
+
+        document.getElementById("timeText").innerText =
+            "Survival: " + survivalTime;
+
+        document.getElementById("healthText").style.display =
+            "block";
+
+        document.getElementById("healthText").innerText =
+           "Health: " + playerHealth;
 
     }
 
     requestAnimationFrame(gameLoop);
+
 }
+
+
 
 gameLoop();
