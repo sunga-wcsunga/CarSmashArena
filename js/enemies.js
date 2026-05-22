@@ -55,10 +55,27 @@ function moveEnemies() {
 
         else {
 
-            //runaway
-            let dx = enemy.x - player.x;
-            let dy = enemy.y - player.y;
-            targetAngle = Math.atan2(dy, dx);
+            //mode:classic
+            if(gameMode === "classic"){
+
+                //enemyruns
+                let dx = enemy.x - player.x;
+                let dy = enemy.y - player.y;
+
+                targetAngle = Math.atan2(dy, dx);
+
+            }
+
+            //mode:survival
+            else if(gameMode === "survival"){
+
+                //enemychases
+                let dx = player.x - enemy.x;
+                let dy = player.y - enemy.y;
+
+                targetAngle = Math.atan2(dy, dx);
+
+            }
 
         }
 
@@ -178,7 +195,7 @@ function checkEnemyCollisions(){
 
             ){
 
-                // PUSH APART
+                //pushapart
                 let dx = enemy1.x - enemy2.x;
                 let dy = enemy1.y - enemy2.y;
 

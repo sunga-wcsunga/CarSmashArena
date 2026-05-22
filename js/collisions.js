@@ -47,7 +47,8 @@ function checkCollisions() {
                 let collisionAngle = Math.atan2(dy, dx);
 
                 // PLAYER FACING CHECK
-                let playerDifference = collisionAngle - player.angle;
+                let playerDifference =
+                    collisionAngle - player.angle;
 
                     playerDifference = Math.atan2(
 
@@ -56,12 +57,15 @@ function checkCollisions() {
 
                     );
 
-                // ENEMY FACING CHECK
-                let enemyToPlayerAngle = Math.atan2(player.y - enemy.y,
-                    
-                    player.x - enemy.x);
+                // ENEMY FACING PLAYER
+                let enemyToPlayerAngle =
+                    Math.atan2(
+                        player.y - enemy.y,
+                        player.x - enemy.x
+                    );
 
-                let enemyDifference = enemyToPlayerAngle - enemy.angle;
+                let enemyDifference =
+                    enemyToPlayerAngle - enemy.angle;
 
                     enemyDifference = Math.atan2(
 
@@ -70,36 +74,39 @@ function checkCollisions() {
 
                     );
 
-                // IS PLAYER FRONT HITTING?
-                let playerFront = Math.abs(playerDifference) < 1;
+                // FRONT CHECKS
+                let playerFront =
+                    Math.abs(playerDifference) < 1;
 
-                // IS ENEMY FRONT HITTING?
-                let enemyFront = Math.abs(enemyDifference) > 1;
+                let enemyFront =
+                    Math.abs(enemyDifference) < 1;
 
-                // HEAD TO HEAD
+                // HEAD-ON CRASH
                 if(playerFront && enemyFront){
 
-                    // BOUNCE PLAYER
-                    player.velocityX -= Math.cos(player.angle) * 8;
+                    player.velocityX -=
+                        Math.cos(player.angle) * 8;
 
-                    player.velocityY -= Math.sin(player.angle) * 8;
+                    player.velocityY -=
+                        Math.sin(player.angle) * 8;
 
-                    // BOUNCE ENEMY
-                    enemy.velocityX -= Math.cos(enemy.angle) * 8;
+                    enemy.velocityX -=
+                        Math.cos(enemy.angle) * 8;
 
-                    enemy.velocityY -= Math.sin(enemy.angle) * 8;
+                    enemy.velocityY -=
+                        Math.sin(enemy.angle) * 8;
 
                 }
 
                 // PLAYER ATTACK
-                else if(playerFront){
+                else if(playerFront && !enemyFront){
 
                     score += 25;
 
                 }
 
                 // ENEMY ATTACK
-                else if(enemyFront){
+                else if(enemyFront && !playerFront){
 
                     playerHealth -= 20;
 
