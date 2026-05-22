@@ -7,6 +7,8 @@ let gameOver = false;
 let gameStarted = false;
 let combo = 0;
 let comboTimer = 0;
+let playerHealth = 100;
+let survivalTime = 0;
 
 setInterval(()=> {
 
@@ -24,11 +26,23 @@ setInterval(()=> {
 
         }
 
-        timeLeft--;
+        //mode:classic
+        if(gameMode === "classic") {
 
-        if(timeLeft <= 0) {
+            timeLeft--;
 
-            gameOver = true;
+            if(timeLeft <= 0) {
+
+                gameOver = true;
+
+            }
+
+        }
+
+            //mode:survival
+        else if(gameMode === "survival") {
+
+            survivalTime++;
 
         }
 
@@ -51,6 +65,7 @@ function gameLoop() {
     movePlayer();
     checkBarrierCollision();
     moveEnemies();
+    checkEnemyCollisions();
     checkCollisions();
     drawPlayer();
     drawEnemies();
@@ -59,8 +74,21 @@ function gameLoop() {
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
     ctx.fillText("Score: " + score, 20, 40);
+    
+    if(gameMode === "classic") {
+
     ctx.fillText("Time: " + timeLeft, 20, 80);
-    ctx.fillText("Combo: " + combo, 20, 120);
+
+    }
+
+    else if(gameMode === "survival") {
+
+        ctx.fillText("Survival: " + survivalTime, 20, 80);
+        ctx.fillText("Health: " + playerHealth, 20, 120);
+
+    }
+
+    ctx.fillText("Combo: " + combo, 20, 160);
 
     if(gameOver) {
 

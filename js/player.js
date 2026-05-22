@@ -95,9 +95,11 @@ function drawPlayer() {
     ctx.save();
 
     //center
-    ctx.translate(
+    ctx.translate (
+
         player.x + player.width / 2,
         player.y + player.height / 2
+
     );
 
     //rotate
@@ -105,12 +107,24 @@ function drawPlayer() {
 
     //drawcar
     ctx.fillStyle = player.color;
+    ctx.fillRect (
 
-    ctx.fillRect(
         -player.width / 2,
         -player.height / 2,
         player.width,
         player.height
+
+    );
+
+    //frontmark
+    ctx.fillStyle = "white";
+    ctx.fillRect (
+
+        -8,
+        -player.height / 2,
+        16,
+        10
+
     );
 
     ctx.restore();

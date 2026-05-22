@@ -160,6 +160,51 @@ function moveEnemies() {
 
 }
 
+function checkEnemyCollisions(){
+
+    for(let i = 0; i < enemies.length; i++){
+
+        for(let j = i + 1; j < enemies.length; j++){
+
+            let enemy1 = enemies[i];
+            let enemy2 = enemies[j];
+
+            if(
+
+                enemy1.x < enemy2.x + enemy2.width &&
+                enemy1.x + enemy1.width > enemy2.x &&
+                enemy1.y < enemy2.y + enemy2.height &&
+                enemy1.y + enemy1.height > enemy2.y
+
+            ){
+
+                // PUSH APART
+                let dx = enemy1.x - enemy2.x;
+                let dy = enemy1.y - enemy2.y;
+
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if(distance === 0){
+                    distance = 1;
+                }
+
+                let pushX = dx / distance;
+                let pushY = dy / distance;
+
+                enemy1.x += pushX * 5;
+                enemy1.y += pushY * 5;
+
+                enemy2.x -= pushX * 5;
+                enemy2.y -= pushY * 5;
+
+            }
+
+        }
+
+    }
+
+}
+
 function drawEnemies() {
 
     enemies.forEach(enemy => {
@@ -187,6 +232,17 @@ function drawEnemies() {
             enemy.width,
             enemy.height
             
+        );
+
+        //frontmark
+        ctx.fillStyle = "white";
+        ctx.fillRect (
+
+            -8,
+            -enemy.height / 2,
+            16,
+            10
+
         );
 
         ctx.restore();

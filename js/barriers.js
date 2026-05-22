@@ -13,7 +13,7 @@ let barriers = [
     {
 
         x: 100,
-        y: 350,
+        y: 250,
 
         width: 40,
         height: 180
