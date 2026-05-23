@@ -9,10 +9,11 @@ let combo = 0;
 let comboTimer = 0;
 let playerHealth = 100;
 let survivalTime = 0;
+let paused = false;
 
 setInterval(()=> {
 
-    if(!gameOver) {
+    if(!gameOver && !paused) {
 
         if(comboTimer > 0) {
 
@@ -60,6 +61,38 @@ function gameLoop() {
         requestAnimationFrame(gameLoop);
         return;
 
+    }
+
+    if(paused){
+
+        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = "white";
+
+        ctx.textAlign = "center";
+
+        ctx.font = "70px Arial";
+
+        ctx.fillText(
+            "PAUSED",
+            canvas.width / 2,
+            250
+        );
+
+        ctx.font = "30px Arial";
+
+        ctx.fillText(
+            "Press SPACE to Resume",
+            canvas.width / 2,
+           320
+        );
+
+        ctx.textAlign = "left";
+
+        requestAnimationFrame(gameLoop);
+
+        return;
     }
 
     movePlayer();
