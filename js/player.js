@@ -55,6 +55,10 @@ function movePlayer() {
 
     }
 
+    //saveoldposition
+    player.oldX = player.x;
+    player.oldY = player.y;
+
     //movement
     player.x += player.velocityX;
     player.y += player.velocityY;

@@ -69,10 +69,9 @@ function checkBarrierCollision() {
             player.velocityX = 0;
             player.velocityY = 0;
 
-            //pushbackplayer
-            player.x -= Math.cos(player.angle) * 10;
-            player.y -= Math.sin(player.angle) * 10;
-        
+            //restoreposition
+            player.x = player.oldX;
+            player.y = player.oldY;
         }
 
     } );
