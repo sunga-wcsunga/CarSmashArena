@@ -19,6 +19,9 @@ canvas {
 
     background:#222;
     border:4px solid red;
+    margin-top:20px;
+    position: relative;
+    z-index: 1;
 
 }
 
@@ -125,4 +128,62 @@ canvas {
     font-size: 24px;
 
     font-weight: bold;
+}
+
+.overlay{
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.9);
+
+    display: none;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 20;
+
+    pointer-events: auto;
+
+}
+
+.overlay h1{
+
+    font-size: 70px;
+
+    margin-bottom: 30px;
+}
+
+.overlay button{
+
+    padding: 15px 40px;
+
+    font-size: 24px;
+
+    margin: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    background: cyan;
+
+    color: black;
+}
+
+.overlay p{
+
+    font-size: 30px;
+
+    margin-bottom: 30px;
 }

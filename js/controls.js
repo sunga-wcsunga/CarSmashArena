@@ -14,27 +14,29 @@ document.addEventListener("keyup", (e)=> {
 
 document.addEventListener("keydown", (e)=>{
 
-    //space:pause
     if(e.code === "Space"){
 
-        paused = !paused;
+        if(gameStarted && !gameOver){
+
+            paused = !paused;
+
+            if(paused){
+
+                document.getElementById("pauseMenu")
+                    .style.display = "flex";
+
+            }
+
+            else{
+
+                document.getElementById("pauseMenu")
+                    .style.display = "none";
+
+            }
+
+        }
 
     }
 
 });
 
-if(e.code === "Escape"){
-
-    if(paused){
-
-        gameStarted = false;
-
-        paused = false;
-
-        gameOver = false;
-
-        menu.style.display = "flex";
-
-    }
-
-}

@@ -56,6 +56,9 @@ function gameLoop() {
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
+    document.getElementById("gameOverMenu")
+    .style.display = "none";
+
     if(!gameStarted) {
 
         requestAnimationFrame(gameLoop);
@@ -65,34 +68,9 @@ function gameLoop() {
 
     if(paused){
 
-        ctx.fillStyle = "rgba(0,0,0,0.7)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-
-        ctx.fillStyle = "white";
-
-        ctx.textAlign = "center";
-
-        ctx.font = "70px Arial";
-
-        ctx.fillText(
-            "PAUSED",
-            canvas.width / 2,
-            250
-        );
-
-        ctx.font = "30px Arial";
-
-        ctx.fillText(
-            "Press SPACE to Resume",
-            canvas.width / 2,
-           320
-        );
-
-        ctx.textAlign = "left";
-
         requestAnimationFrame(gameLoop);
-
         return;
+
     }
 
     movePlayer();
@@ -106,19 +84,11 @@ function gameLoop() {
 
     if(gameOver) {
 
-        ctx.fillStyle = "white";
+         document.getElementById("gameOverMenu")
+        .style.display = "flex";
 
-        ctx.textAlign = "center";
-
-        ctx.font = "70px Arial";
-
-        ctx.fillText(
-            "GAME OVER",
-            canvas.width / 2,
-            280
-        );
-
-        ctx.font = "35px Arial";
+        document.getElementById("finalScoreText")
+        .innerText = "Score: " + score;
 
         if(gameMode === "classic"){
 

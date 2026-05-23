@@ -14,35 +14,67 @@
 
     <div id="menu">
 
-    <h1>CAR SMASH ARENA</h1>
+        <h1>CAR SMASH ARENA</h1>
 
-    <p class="tagline">
-        "Bump your anger away!"
-    </p>
+        <p class="tagline">
+          "Bump your anger away!"
+        </p>
 
-    <div class="mode-card">
+        <div class="mode-card">
 
-        <button id="classicButton">
-            CLASSIC MODE
-        </button>
+            <button id="classicButton">
+              CLASSIC MODE
+            </button>
 
-        <p>
+            <p>
             How many can you smash down before time runs out?
-        </p>
+            </p>
+
+        </div>
+
+        <div class="mode-card">
+
+            <button id="survivalButton">
+                SURVIVAL MODE
+            </button>
+
+            <p>
+                How long can you survive?
+            </p>
+
+        </div>
 
     </div>
 
-    <div class="mode-card">
+    <div id="pauseMenu" class="overlay">
 
-        <button id="survivalButton">
-            SURVIVAL MODE
+        <h1>PAUSED</h1>
+
+        <button id="resumeButton">
+            RESUME
         </button>
 
-        <p>
-            How long can you survive?
-        </p>
+        <button id="endGameButton">
+            END GAME
+        </button>
 
     </div>
+
+    <div id="gameOverMenu" class="overlay">
+
+        <h1>GAME OVER</h1>
+
+        <p id="finalScoreText">
+           Score: 0
+        </p>
+
+        <button id="playAgainButton">
+           PLAY AGAIN
+        </button>
+
+        <button id="homeButton">
+            BACK TO HOME
+        </button>
 
     </div>
 
