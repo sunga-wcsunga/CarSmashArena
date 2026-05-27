@@ -7,4 +7,4 @@ bgm.volume = 0.4;
 const crashSound =
     new Audio("assets/sounds/crash.mp3");
 
-crashSound.volume = 0.6;
+crashSound.volume = 0.8;

@@ -1,3 +1,5 @@
+const arenaImage = new Image();
+arenaImage.src = "assets/arena.png";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -53,10 +55,32 @@ setInterval(()=> {
 
 } ,1000);
 
+function drawArena(){
+
+    ctx.drawImage(
+    arenaImage,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+);
+
+    //arenaborderglow
+    ctx.strokeStyle = "cyan";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
+
 //loop
 async function gameLoop() {
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawArena();
 
     if(!gameStarted) {
 

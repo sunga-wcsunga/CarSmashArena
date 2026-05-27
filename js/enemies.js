@@ -1,3 +1,6 @@
+const enemyImage = new Image();
+enemyImage.src = "assets/enemy.png";
+
 let enemies = [];
 
 createEnemies();
@@ -11,8 +14,8 @@ function createEnemies() {
             x: Math.random() * 900,
             y: Math.random() * 500,
 
-            width: 50,
-            height: 80,
+            width: 70,
+            height: 100,
 
             speed: 2 + Math.random() * 2,
 
@@ -222,48 +225,29 @@ function checkEnemyCollisions(){
 
 }
 
-function drawEnemies() {
+function drawEnemies(){
 
     enemies.forEach(enemy => {
 
         ctx.save();
 
-        //movecenter
         ctx.translate(
-
             enemy.x + enemy.width / 2,
             enemy.y + enemy.height / 2
-
         );
 
-        //rotate
         ctx.rotate(enemy.angle + Math.PI / 2);
 
-        //draw
-        ctx.fillStyle = enemy.color;
-
-        ctx.fillRect(
-
+        ctx.drawImage(
+            enemyImage,
             -enemy.width / 2,
             -enemy.height / 2,
             enemy.width,
             enemy.height
-            
-        );
-
-        //frontmark
-        ctx.fillStyle = "white";
-        ctx.fillRect (
-
-            -8,
-            -enemy.height / 2,
-            16,
-            10
-
         );
 
         ctx.restore();
 
-    } );
+    });
 
 }

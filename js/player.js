@@ -1,10 +1,13 @@
+const playerImage = new Image();
+playerImage.src = "assets/player.png";
+
 let player = {
 
     x: 450,
     y: 250,
 
-    width: 50,
-    height: 80,
+    width: 70,
+    height: 100,
 
     velocityX: 0,
     velocityY: 0,
@@ -94,43 +97,25 @@ function movePlayer() {
 
 }
 
-function drawPlayer() {
+function drawPlayer(){
 
     ctx.save();
 
-    //center
-    ctx.translate (
-
+    ctx.translate(
         player.x + player.width / 2,
         player.y + player.height / 2
-
     );
 
-    //rotate
     ctx.rotate(player.angle + Math.PI / 2);
 
-    //drawcar
-    ctx.fillStyle = player.color;
-    ctx.fillRect (
-
+    ctx.drawImage(
+        playerImage,
         -player.width / 2,
         -player.height / 2,
         player.width,
         player.height
-
-    );
-
-    //frontmark
-    ctx.fillStyle = "white";
-    ctx.fillRect (
-
-        -8,
-        -player.height / 2,
-        16,
-        10
-
     );
 
     ctx.restore();
-    
+
 }

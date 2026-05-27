@@ -1,54 +1,35 @@
-let barriers = [
+const barriers = [
 
+    // LEFT TIRES
     {
-
-        x: 300,
-        y: 150,
-
-        width: 200,
-        height: 40
-
+        x: 170,
+        y: 300,
+        width: 90,
+        height: 60
     },
 
+    // TOP CURVED TIRES
     {
-
-        x: 100,
-        y: 250,
-
-        width: 40,
-        height: 180
-
-    },
-
-    {
-
-        x: 700,
-        y: 250,
-
+        x: 550,
+        y: 145,
         width: 150,
-        height: 40
+        height: 45
+    },
 
+    // BOTTOM RIGHT TIRES
+    {
+        x: 790,
+        y: 470,
+        width: 100,
+        height: 60
     }
 
 ];
 
-function drawBarriers() {
+function drawBarriers(){
 
-    barriers.forEach(barrier => {
-
-        ctx.fillStyle = "gray";
-
-        ctx.fillRect(
-
-            barrier.x,
-            barrier.y,
-
-            barrier.width,
-            barrier.height
-
-        );
-
-    });
+    // no drawing needed
+    // barriers are already inside arena.png
 
 }
 
@@ -62,18 +43,17 @@ function checkBarrierCollision() {
             player.x + player.width > barrier.x &&
             player.y < barrier.y + barrier.height &&
             player.y + player.height > barrier.y
-        
+
         ) {
 
-            //atopmovement
             player.velocityX = 0;
             player.velocityY = 0;
 
-            //restoreposition
             player.x = player.oldX;
             player.y = player.oldY;
+
         }
 
-    } );
+    });
 
 }
