@@ -1,6 +1,7 @@
 const menu = document.getElementById("menu");
 const classicButton = document.getElementById("classicButton");
 const survivalButton = document.getElementById("survivalButton");
+const playerNameInput = document.getElementById("playerNameInput");
 
 let gameMode = "classic";
 
@@ -8,6 +9,7 @@ let gameMode = "classic";
 classicButton.addEventListener("click", ()=> {
 
     gameMode = "classic";
+    playerName = playerNameInput.value;
     menu.style.display = "none";
     gameStarted = true;
 
@@ -17,6 +19,7 @@ classicButton.addEventListener("click", ()=> {
 survivalButton.addEventListener("click", ()=> {
 
     gameMode = "survival";
+    playerName = playerNameInput.value;
     menu.style.display = "none";
     gameStarted = true;
 

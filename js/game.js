@@ -10,6 +10,8 @@ let comboTimer = 0;
 let playerHealth = 100;
 let survivalTime = 0;
 let paused = false;
+let playerName = "";
+let scoreSaved = false;
 
 setInterval(()=> {
 
@@ -113,6 +115,14 @@ function gameLoop() {
                 canvas.width / 2,
                 390
             );
+
+        }
+
+        if(!scoreSaved){
+
+            saveScore(playerName, score, gameMode);
+
+            scoreSaved = true;
 
         }
 
