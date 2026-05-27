@@ -19,6 +19,7 @@ classicButton.addEventListener("click", ()=> {
         }
     menu.style.display = "none";
     gameStarted = true;
+    bgm.play();
 
     if(window.loadLeaderboard){
 
@@ -42,6 +43,7 @@ survivalButton.addEventListener("click", ()=> {
         }
     menu.style.display = "none";
     gameStarted = true;
+    bgm.play();
 
     if(window.loadLeaderboard){
 

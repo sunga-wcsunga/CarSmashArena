@@ -10,6 +10,9 @@ function checkCollisions() {
             player.y + player.height > enemy.y
         
         ) {
+
+            crashSound.currentTime = 0;
+            crashSound.play();
         
             //mode:classic
             if(gameMode === "classic") {
