@@ -10,7 +10,8 @@ import {
     getDocs,
     query,
     orderBy,
-    limit
+    limit,
+    where
 
 }
 
@@ -19,15 +20,10 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
 
     apiKey: "AIzaSyBoyjgbZxqOHR87YduGkIJofDOjzHIteOc",
-
     authDomain: "car-smash-arena.firebaseapp.com",
-
     projectId: "car-smash-arena",
-
     storageBucket: "car-smash-arena.firebasestorage.app",
-
     messagingSenderId: "810804730810",
-
     appId: "1:810804730810:web:c0cd75be48e5336a795b83"
 
 };
@@ -48,11 +44,8 @@ window.saveScore = async function(playerName, score, mode){
             {
 
                 playerName: playerName,
-
                 score: score,
-
                 mode: mode,
-
                 createdAt: new Date()
 
             }
@@ -71,50 +64,87 @@ window.saveScore = async function(playerName, score, mode){
 
 }
 
-window.loadLeaderboard = async function(){
+window.loadLeaderboard = async function(mode){
 
-    const leaderboardList =
+    try{
+
+        const leaderboardTitle =
+        document.getElementById("leaderboardTitle");
+
+        if(mode === "classic"){
+
+            leaderboardTitle.innerText =
+                "Classic Leaderboard";
+
+        }
+
+        else{
+
+            leaderboardTitle.innerText =
+                "Survival Leaderboard";
+
+        }
+
+        const leaderboardList =
         document.getElementById("leaderboardList");
 
-    leaderboardList.innerHTML = "";
+        leaderboardList.innerHTML = "";
 
-    const q = query(
+        const q = query(
 
-        collection(db, "scores"),
+            collection(db, "scores"),
 
-        orderBy("score", "desc"),
+            where("mode", "==", mode),
 
-        limit(5)
+            orderBy("score", "desc"),
 
-    );
+            limit(5)
 
-    const querySnapshot = await getDocs(q);
+        );
 
-    let rank = 1;
+        const querySnapshot = await getDocs(q);
+        console.log("Leaderboard size:", querySnapshot.size);
 
-    querySnapshot.forEach((doc)=>{
+        console.log(
+            "Leaderboard docs:",
+            querySnapshot.size
+        );
 
-        const data = doc.data();
+        if(querySnapshot.empty){
 
-        leaderboardList.innerHTML += `
+            leaderboardList.innerHTML =
+                "<div>No scores yet</div>";
 
-            <div>
+            return;
 
-                ${rank}. ${data.playerName}
-                - ${data.score}
+        }
 
-            </div>
+        let rank = 1;
 
-        `;
+        querySnapshot.forEach((doc)=>{
 
-        rank++;
+            console.log(doc.data());
 
-    });
+            const data = doc.data();
+
+            leaderboardList.innerHTML += `
+                <div>
+                    ${rank}. ${data.playerName} - ${data.score}
+                </div>
+            `;
+
+            rank++;
+
+        });
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
 
 }
 
-window.addEventListener("load", ()=>{
-
-    loadLeaderboard();
-
-});
+window.dbReady = true;

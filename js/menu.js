@@ -9,9 +9,22 @@ let gameMode = "classic";
 classicButton.addEventListener("click", ()=> {
 
     gameMode = "classic";
-    playerName = playerNameInput.value;
+    playerName =
+    playerNameInput.value.trim();
+
+        if(playerName === ""){
+
+            playerName = "Anonymous";
+
+        }
     menu.style.display = "none";
     gameStarted = true;
+
+    if(window.loadLeaderboard){
+
+    loadLeaderboard(gameMode);
+
+}
 
 } );
 
@@ -19,9 +32,22 @@ classicButton.addEventListener("click", ()=> {
 survivalButton.addEventListener("click", ()=> {
 
     gameMode = "survival";
-    playerName = playerNameInput.value;
+    playerName =
+    playerNameInput.value.trim();
+
+        if(playerName === ""){
+
+            playerName = "Anonymous";
+
+        }
     menu.style.display = "none";
     gameStarted = true;
+
+    if(window.loadLeaderboard){
+
+    loadLeaderboard(gameMode);
+
+}
 
 } );
 

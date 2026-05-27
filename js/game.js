@@ -54,14 +54,14 @@ setInterval(()=> {
 } ,1000);
 
 //loop
-function gameLoop() {
+async function gameLoop() {
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    document.getElementById("gameOverMenu")
-    .style.display = "none";
-
     if(!gameStarted) {
+
+        document.getElementById("gameOverMenu")
+        .style.display = "none";
 
         requestAnimationFrame(gameLoop);
         return;
@@ -120,8 +120,13 @@ function gameLoop() {
 
         if(!scoreSaved){
 
-            saveScore(playerName, score, gameMode);
+            await saveScore(playerName, score, gameMode);
 
+            if(window.loadLeaderboard){
+
+                await loadLeaderboard(gameMode);
+
+            }
             scoreSaved = true;
 
         }
