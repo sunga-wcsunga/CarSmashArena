@@ -1,4 +1,3 @@
-// FIREBASE IMPORTS
 import { initializeApp }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -7,13 +6,16 @@ import {
 
     getFirestore,
     collection,
-    addDoc
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    limit
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE CONFIG
 const firebaseConfig = {
 
     apiKey: "AIzaSyBoyjgbZxqOHR87YduGkIJofDOjzHIteOc",
@@ -30,13 +32,11 @@ const firebaseConfig = {
 
 };
 
-// INITIALIZE FIREBASE
 const app = initializeApp(firebaseConfig);
 
-// DATABASE
 const db = getFirestore(app);
 
-// SAVE SCORE FUNCTION
+
 window.saveScore = async function(playerName, score, mode){
 
     try{
@@ -70,3 +70,51 @@ window.saveScore = async function(playerName, score, mode){
     }
 
 }
+
+window.loadLeaderboard = async function(){
+
+    const leaderboardList =
+        document.getElementById("leaderboardList");
+
+    leaderboardList.innerHTML = "";
+
+    const q = query(
+
+        collection(db, "scores"),
+
+        orderBy("score", "desc"),
+
+        limit(5)
+
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    let rank = 1;
+
+    querySnapshot.forEach((doc)=>{
+
+        const data = doc.data();
+
+        leaderboardList.innerHTML += `
+
+            <div>
+
+                ${rank}. ${data.playerName}
+                - ${data.score}
+
+            </div>
+
+        `;
+
+        rank++;
+
+    });
+
+}
+
+window.addEventListener("load", ()=>{
+
+    loadLeaderboard();
+
+});

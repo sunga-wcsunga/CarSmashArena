@@ -187,3 +187,25 @@ canvas {
 
     margin-bottom: 30px;
 }
+
+#leaderboard{
+
+    margin-top: 20px;
+
+    color: white;
+
+}
+
+#leaderboard h2{
+
+    margin-bottom: 10px;
+
+}
+
+#leaderboardList{
+
+    font-size: 22px;
+
+    line-height: 1.8;
+
+}
