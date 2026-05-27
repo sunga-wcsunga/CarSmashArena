@@ -13,6 +13,7 @@ function checkCollisions() {
 
             crashSound.currentTime = 0;
             crashSound.play();
+            screenShake = 12;
         
             //mode:classic
             if(gameMode === "classic") {

@@ -14,6 +14,7 @@ let survivalTime = 0;
 let paused = false;
 let playerName = "";
 let scoreSaved = false;
+let screenShake = 0;
 
 setInterval(()=> {
 
@@ -81,6 +82,30 @@ function drawArena(){
 async function gameLoop() {
 
     drawArena();
+
+    ctx.save();
+
+    if(screenShake > 0){
+
+        const shakeX =
+            (Math.random() - 0.5) * screenShake;
+
+        const shakeY =
+            (Math.random() - 0.5) * screenShake;
+
+        ctx.translate(shakeX, shakeY);
+
+        screenShake *= 0.9;
+
+        if(screenShake < 0.5){
+
+            screenShake = 0;
+
+        }
+
+    }
+
+
 
     if(!gameStarted) {
 
@@ -187,7 +212,9 @@ async function gameLoop() {
            "Health: " + playerHealth;
 
     }
-
+    
+    ctx.restore();
+    
     requestAnimationFrame(gameLoop);
 
 }
