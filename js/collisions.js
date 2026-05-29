@@ -14,6 +14,14 @@ function checkCollisions() {
             crashSound.currentTime = 0;
             crashSound.play();
             screenShake = 12;
+
+            createSparks(
+
+                player.x + player.width / 2,
+
+                player.y + player.height / 2
+
+            );
         
             //mode:classic
             if(gameMode === "classic") {

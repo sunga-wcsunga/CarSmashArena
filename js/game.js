@@ -15,6 +15,7 @@ let paused = false;
 let playerName = "";
 let scoreSaved = false;
 let screenShake = 0;
+let particles = [];
 
 setInterval(()=> {
 
@@ -78,6 +79,69 @@ function drawArena(){
 
 }
 
+function createSparks(x, y){
+
+    for(let i = 0; i < 15; i++){
+
+        particles.push({
+
+            x: x,
+            y: y,
+
+            velocityX:
+                (Math.random() - 0.5) * 8,
+
+            velocityY:
+                (Math.random() - 0.5) * 8,
+
+            size:
+                Math.random() * 5 + 2,
+
+            life: 30
+
+        });
+
+    }
+
+}
+
+function drawParticles(){
+
+    particles.forEach((particle, index)=>{
+
+        ctx.fillStyle = "cyan";
+
+        ctx.beginPath();
+
+        ctx.arc(
+
+            particle.x,
+            particle.y,
+            particle.size,
+            0,
+            Math.PI * 2
+
+        );
+
+        ctx.fill();
+
+        particle.x += particle.velocityX;
+        particle.y += particle.velocityY;
+
+        particle.life--;
+
+        particle.size *= 0.95;
+
+        if(particle.life <= 0){
+
+            particles.splice(index, 1);
+
+        }
+
+    });
+
+}
+
 //loop
 async function gameLoop() {
 
@@ -132,6 +196,7 @@ async function gameLoop() {
     drawPlayer();
     drawEnemies();
     drawBarriers();
+    drawParticles();
 
     if(gameOver) {
 
@@ -214,7 +279,7 @@ async function gameLoop() {
     }
     
     ctx.restore();
-    
+
     requestAnimationFrame(gameLoop);
 
 }
