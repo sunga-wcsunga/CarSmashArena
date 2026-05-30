@@ -33,7 +33,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-window.saveScore = async function(playerName, score, mode){
+window.saveScore = async function(
+    playerName,
+    score,
+    mode,
+    survivalTime
+){
 
     try{
 
@@ -46,6 +51,7 @@ window.saveScore = async function(playerName, score, mode){
                 playerName: playerName,
                 score: score,
                 mode: mode,
+                survivalTime,
                 createdAt: new Date()
 
             }
@@ -144,6 +150,56 @@ window.loadLeaderboard = async function(mode){
         console.log(error);
 
     }
+
+}
+
+window.loadHistory = async function(){
+
+    const historyList =
+        document.getElementById("historyList");
+
+    historyList.innerHTML = "";
+
+    const q = query(
+
+        collection(db, "scores"),
+
+        orderBy("createdAt", "desc"),
+
+        limit(5)
+
+    );
+
+    const querySnapshot =
+        await getDocs(q);
+
+    querySnapshot.forEach((doc)=>{
+
+        const data = doc.data();
+
+        if(data.mode === "classic"){
+
+            historyList.innerHTML += `
+            <div>
+                ${data.playerName}
+                - ${data.score} pts
+            </div>
+            `;
+
+        }
+
+        else if(data.mode === "survival"){
+
+            historyList.innerHTML += `
+            <div>
+                ${data.playerName}
+                - ${data.survivalTime}s
+            </div>
+            `;
+
+        }
+
+    });
 
 }
 

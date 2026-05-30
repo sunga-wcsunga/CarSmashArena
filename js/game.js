@@ -234,7 +234,14 @@ async function gameLoop() {
 
         if(!scoreSaved){
 
-            await saveScore(playerName, score, gameMode);
+            await saveScore(
+                playerName,
+                score,
+                gameMode,
+                survivalTime
+            );
+
+            await loadHistory();
 
             if(window.loadLeaderboard){
 

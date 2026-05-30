@@ -25,6 +25,8 @@ classicButton.addEventListener("click", ()=> {
 
     loadLeaderboard(gameMode);
 
+    loadHistory();
+
 }
 
 } );
@@ -48,6 +50,8 @@ survivalButton.addEventListener("click", ()=> {
     if(window.loadLeaderboard){
 
     loadLeaderboard(gameMode);
+
+    loadHistory();
 
 }
 
