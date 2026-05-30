@@ -45,10 +45,15 @@ canvas{
 
 }
 
-#menu h1 {
+#menu h1{
 
-    font-size: 60px;
-    margin-bottom: 10px;
+    font-size: 72px;
+    margin-bottom: 40px;
+    color: cyan;
+    text-shadow:
+        0 0 10px cyan,
+        0 0 20px cyan,
+        0 0 40px cyan;
 
 }
 
@@ -59,7 +64,10 @@ canvas{
 }
 
 .tagline {
-
+    
+    color: #ff4fd8;
+    font-size: 22px;
+    text-shadow: 0 0 10px #ff4fd8;
     margin-bottom: 40px;
     font-style: italic;
 
@@ -184,6 +192,9 @@ canvas{
 #leaderboard h2{
 
     margin-bottom: 10px;
+     color: cyan;
+    text-shadow:
+        0 0 8px cyan;
 
 }
 
@@ -191,6 +202,7 @@ canvas{
 
     font-size: 22px;
     line-height: 1.8;
+    color: white;
 
 }
 
@@ -239,3 +251,58 @@ canvas{
 
 }
 
+#playerNameInput{
+
+    width: 320px;
+
+    padding: 15px;
+
+    margin-bottom: 25px;
+
+    font-size: 20px;
+
+    text-align: center;
+
+    color: white;
+
+    background: rgba(0,0,0,0.8);
+
+    border: 2px solid cyan;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    box-shadow: 0 0 15px cyan;
+
+}
+
+#playerNameInput::placeholder{
+
+    color: #999;
+
+}
+
+#scoreText{
+
+    color: #00ffff;
+
+}
+
+#timeText{
+
+    color: #ffd700;
+
+}
+
+#healthText{
+
+    color: #ff5555;
+
+}
+
+#comboText{
+
+    color: #ff4fd8;
+
+}
