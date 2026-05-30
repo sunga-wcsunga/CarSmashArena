@@ -16,10 +16,12 @@ let playerName = "";
 let scoreSaved = false;
 let screenShake = 0;
 let particles = [];
+let countdown = 3;
+let countdownActive = false;
 
 setInterval(()=> {
 
-    if(!gameOver && !paused) {
+    if(!gameOver && !paused && gameStarted) {
 
         if(comboTimer > 0) {
 
@@ -169,7 +171,46 @@ async function gameLoop() {
 
     }
 
+    if(countdownActive){
 
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        drawArena();
+
+            ctx.fillStyle = "white";
+            ctx.font = "120px Arial";
+            ctx.textAlign = "center";
+
+        if(countdown > 0){
+
+            ctx.fillText(
+                countdown,
+                canvas.width / 2,
+                canvas.height / 2
+            ); 
+
+        }
+
+        else{
+
+            ctx.fillStyle = "lime";
+            ctx.fillText(
+                "GO!",
+                canvas.width / 2,
+                canvas.height / 2
+            );
+
+        }
+
+        requestAnimationFrame(gameLoop);
+        return;
+
+    }
 
     if(!gameStarted) {
 
@@ -290,7 +331,6 @@ async function gameLoop() {
     requestAnimationFrame(gameLoop);
 
 }
-
 
 
 gameLoop();

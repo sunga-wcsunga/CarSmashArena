@@ -22,18 +22,34 @@ classicButton.addEventListener("click", ()=> {
 
         }
     menu.style.display = "none";
-    gameStarted = true;
-    bgm.play();
+    countdown = 3;
+    countdownActive = true;
+
+    const countdownInterval = setInterval(()=>{
+
+        countdown--;
+
+        if(countdown < 0){
+
+            clearInterval(countdownInterval);
+
+            countdownActive = false;
+            gameStarted = true;
+
+            bgm.play();
+
+        }
+
+    }, 1000);
 
     if(window.loadLeaderboard){
 
-    loadLeaderboard(gameMode);
+        loadLeaderboard(gameMode);
+        loadHistory();
 
-    loadHistory();
+    }
 
-}
-
-} );
+});
 
 //modesurvival
 survivalButton.addEventListener("click", ()=> {
@@ -52,8 +68,25 @@ survivalButton.addEventListener("click", ()=> {
 
         }
     menu.style.display = "none";
-    gameStarted = true;
-    bgm.play();
+    countdown = 3;
+    countdownActive = true;
+
+    const countdownInterval = setInterval(()=>{
+
+        countdown--;
+
+        if(countdown < 0){
+
+            clearInterval(countdownInterval);
+
+            countdownActive = false;
+            gameStarted = true;
+
+            bgm.play();
+
+        }
+
+    }, 1000);
 
     if(window.loadLeaderboard){
 
