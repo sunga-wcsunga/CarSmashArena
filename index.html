@@ -84,48 +84,52 @@
 
     </div>
 
-    <h1>Car Smash Arena</h1>
-
-    <div id="hud">
-
-        <div id="scoreText">
-            Score: 0
-        </div>
-
-        <div id="timeText">
-            Time: 60
-        </div>
-
-        <div id="healthText">
-            Health: 100
-        </div>
-
-        <div id="comboText">
-            Combo: 0
-        </div>
-
-    </div>
+    <div id="gameTitle"></div>
 
     <div id="gameContainer">
 
-        <div id="leaderboard">
+        <div id="sidebar">
 
-            <h2 id="leaderboardTitle">
-                Leaderboard
-            </h2>
+            <div id="hud">
 
-            <div id="leaderboardList"> </div>
-            
-            <h2>Recent Matches</h2>
+                <div id="scoreText">
+                    Score: 0
+                </div>
 
-            <div id="historyList"> </div>
+                <div id="timeText">
+                    Time: 60
+                </div>
+
+                <div id="healthText">
+                    Health: 100
+                </div>
+
+                <div id="comboText">
+                    Combo: 0
+                </div>
+
+            </div>
+
+            <div id="leaderboard">
+
+                <h2 id="leaderboardTitle">
+                   Leaderboard
+                </h2>
+
+                <div id="leaderboardList"></div>
+
+                <h2>Recent Matches</h2>
+
+                <div id="historyList"></div>
+
+            </div>
 
         </div>
 
         <canvas
             id="gameCanvas"
-            width="1000"
-            height="600">
+            width="900"
+            height="500">
         </canvas>
 
     </div>

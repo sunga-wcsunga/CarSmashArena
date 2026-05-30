@@ -2,8 +2,7 @@ body {
 
     margin:0;
     background:black;
-    overflow-x:hidden;
-    overflow-y:auto;
+    overflow:hidden;
     text-align:center;
     font-family:Arial;
     color:white;
@@ -48,7 +47,7 @@ canvas{
 #menu h1{
 
     font-size: 72px;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     color: cyan;
     text-shadow:
         0 0 10px cyan,
@@ -63,13 +62,17 @@ canvas{
 
 }
 
-.tagline {
-    
+.tagline{
+
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 2px;
     color: #ff4fd8;
-    font-size: 22px;
-    text-shadow: 0 0 10px #ff4fd8;
-    margin-bottom: 40px;
-    font-style: italic;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px #ff4fd8,
+        0 0 25px #ff4fd8,
+        0 0 50px #ff4fd8;
 
 }
 
@@ -126,13 +129,19 @@ canvas{
 
 #hud{
 
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    font-size: 24px;
-    font-weight: bold;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background:#111;
+    border:2px solid cyan;
+    border-radius:15px;
+    padding:20px;
+    width:100%;
+    box-sizing:border-box;
+    box-shadow:0 0 15px cyan;
+
+
+
 }
 
 .overlay{
@@ -211,8 +220,8 @@ canvas{
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 30px;
-    padding: 20px;
+    gap: 20px;
+    padding: 5px 20px 20px 20px;
 
 }
 
@@ -235,8 +244,8 @@ canvas{
 
     canvas{
 
-        width: 90%;
-
+        width:68vw;
+        max-height:75vh;
     }
 
 }
@@ -244,9 +253,7 @@ canvas{
 #historyList{
 
     margin-top: 10px;
-
     font-size: 18px;
-
     line-height: 1.6;
 
 }
@@ -254,25 +261,15 @@ canvas{
 #playerNameInput{
 
     width: 320px;
-
     padding: 15px;
-
     margin-bottom: 25px;
-
     font-size: 20px;
-
     text-align: center;
-
     color: white;
-
     background: rgba(0,0,0,0.8);
-
     border: 2px solid cyan;
-
     border-radius: 12px;
-
     outline: none;
-
     box-shadow: 0 0 15px cyan;
 
 }
@@ -304,5 +301,38 @@ canvas{
 #comboText{
 
     color: #ff4fd8;
+
+}
+
+#gameTitle{
+
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: cyan;
+    width:900px;
+    margin:10px;
+    text-shadow:
+        0 0 10px cyan,
+        0 0 20px cyan;
+    margin-bottom:20px;
+    margin-left:400px;
+
+}
+
+#sidebar{
+
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    width:320px;
+
+}
+
+#gameArea{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 
 }

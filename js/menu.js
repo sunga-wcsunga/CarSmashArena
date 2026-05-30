@@ -9,6 +9,10 @@ let gameMode = "classic";
 classicButton.addEventListener("click", ()=> {
 
     gameMode = "classic";
+
+    document.getElementById("gameTitle").innerText =
+    "Smash as many cars as possible!";
+
     playerName =
     playerNameInput.value.trim();
 
@@ -35,6 +39,10 @@ classicButton.addEventListener("click", ()=> {
 survivalButton.addEventListener("click", ()=> {
 
     gameMode = "survival";
+
+    document.getElementById("gameTitle").innerText =
+    "Survive as long as possible!";
+    
     playerName =
     playerNameInput.value.trim();
 
