@@ -36,6 +36,38 @@ function createEnemies() {
 
 }
 
+function respawnEnemy(enemy){
+
+    let valid = false;
+
+    while(!valid){
+
+        enemy.x = Math.random() * 800;
+        enemy.y = Math.random() * 400;
+
+        valid = true;
+
+        barriers.forEach((barrier)=>{
+
+            if(
+
+                enemy.x < barrier.x + barrier.width &&
+                enemy.x + enemy.width > barrier.x &&
+                enemy.y < barrier.y + barrier.height &&
+                enemy.y + enemy.height > barrier.y
+
+            ){
+
+                valid = false;
+
+            }
+
+        });
+
+    }
+
+}
+
 function moveEnemies() {
 
     if(gameOver) {
@@ -166,11 +198,12 @@ function moveEnemies() {
                     (Math.random() * Math.PI - Math.PI / 2);
 
                 //pushback
-                enemy.x -= Math.cos(enemy.angle) * 10;
-                enemy.y -= Math.sin(enemy.angle) * 10;
+                enemy.x -= Math.cos(enemy.angle) * 20;
+                enemy.y -= Math.sin(enemy.angle) * 20;
 
                 enemy.velocityX = 0;
                 enemy.velocityY = 0;
+                enemy.angle = enemy.avoidAngle;
 
             }
 
