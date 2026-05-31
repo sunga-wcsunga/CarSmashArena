@@ -2,6 +2,9 @@ const menu = document.getElementById("menu");
 const classicButton = document.getElementById("classicButton");
 const survivalButton = document.getElementById("survivalButton");
 const playerNameInput = document.getElementById("playerNameInput");
+const instructionsButton = document.getElementById("instructionsButton");
+const instructionsMenu = document.getElementById("instructionsMenu");
+const closeInstructionsButton = document.getElementById("closeInstructionsButton");
 
 let gameMode = "classic";
 
@@ -143,5 +146,17 @@ playAgainButton.addEventListener("click", ()=>{
 homeButton.addEventListener("click", ()=>{
 
     location.reload();
+
+});
+
+instructionsButton.addEventListener("click", ()=>{
+
+    instructionsMenu.style.display = "flex";
+
+});
+
+closeInstructionsButton.addEventListener("click", ()=>{
+
+    instructionsMenu.style.display = "none";
 
 });

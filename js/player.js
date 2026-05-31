@@ -50,6 +50,16 @@ function movePlayer() {
 
     }
 
+    if(keys["ArrowDown"] || keys["s"]){
+
+        player.velocityX =
+            -Math.cos(player.angle) * player.moveSpeed * 0.5;
+
+        player.velocityY =
+            -Math.sin(player.angle) * player.moveSpeed * 0.5;
+
+    }
+
     else {
 
         //slowdown
