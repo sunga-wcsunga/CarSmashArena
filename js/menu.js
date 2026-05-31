@@ -139,7 +139,7 @@ endGameButton.addEventListener("click", ()=>{
 
 playAgainButton.addEventListener("click", ()=>{
 
-    location.reload();
+    restartGame();
 
 });
 

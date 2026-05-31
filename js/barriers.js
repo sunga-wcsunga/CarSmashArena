@@ -2,34 +2,32 @@ const barriers = [
 
     // LEFT TIRES
     {
-        x: 170,
-        y: 300,
-        width: 90,
-        height: 60
+        x: 155,
+        y: 290,
+        width: 130,
+        height: 80
     },
 
     // TOP CURVED TIRES
     {
-        x: 550,
-        y: 145,
-        width: 150,
-        height: 45
+        x: 450,
+        y: 150,
+        width: 200,
+        height: 55
     },
 
     // BOTTOM RIGHT TIRES
     {
-        x: 790,
-        y: 470,
-        width: 100,
-        height: 60
+        x: 700,
+        y: 400,
+        width: 200,
+        height: 100
     }
 
 ];
 
 function drawBarriers(){
 
-    // no drawing needed
-    // barriers are already inside arena.png
 
 }
 

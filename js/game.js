@@ -144,6 +144,51 @@ function drawParticles(){
 
 }
 
+function restartGame(){
+
+    score = 0;
+    timeLeft = 60;
+    combo = 0;
+    comboTimer = 0;
+
+    playerHealth = 100;
+    survivalTime = 0;
+
+    gameOver = false;
+    paused = false;
+
+    scoreSaved = false;
+
+    player.x = 450;
+    player.y = 250;
+
+    player.velocityX = 0;
+    player.velocityY = 0;
+
+    countdown = 3;
+    countdownActive = true;
+    gameStarted = false;
+
+    document.getElementById("gameOverMenu")
+        .style.display = "none";
+
+    const countdownInterval = setInterval(()=>{
+
+        countdown--;
+
+        if(countdown < 0){
+
+            clearInterval(countdownInterval);
+
+            countdownActive = false;
+            gameStarted = true;
+
+        }
+
+    }, 1000);
+
+}
+
 //loop
 async function gameLoop() {
 

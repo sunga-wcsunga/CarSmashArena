@@ -129,21 +129,36 @@ window.loadLeaderboard = async function(mode){
 
         querySnapshot.forEach((doc)=>{
 
-            console.log(doc.data());
-
             const data = doc.data();
 
-            leaderboardList.innerHTML += `
+            if(mode === "survival"){
+
+                leaderboardList.innerHTML += `
                 <div>
-                    ${rank}. ${data.playerName} - ${data.score}
+                    ${rank}. ${data.playerName}
+                    - ${data.score} pts
+                    - ${data.survivalTime}s
                 </div>
-            `;
+                `;
 
-            rank++;
+            }
 
-        });
+            else{
 
-    }
+                leaderboardList.innerHTML += `
+                <div>
+                    ${rank}. ${data.playerName}
+                    - ${data.score} pts
+                </div>
+                `;
+
+            }
+
+        rank++;
+
+    });
+
+}
 
     catch(error){
 
@@ -177,24 +192,25 @@ window.loadHistory = async function(){
 
         const data = doc.data();
 
-        if(data.mode === "classic"){
+        if(data.mode === "survival"){
 
             historyList.innerHTML += `
-            <div>
-                ${data.playerName}
-                - ${data.score} pts
-            </div>
+                <div>
+                    ${data.playerName}
+                    - ${data.score} pts
+                    - ${data.survivalTime}s
+                </div>
             `;
 
         }
 
-        else if(data.mode === "survival"){
+        else{
 
             historyList.innerHTML += `
-            <div>
-                ${data.playerName}
-                - ${data.survivalTime}s
-            </div>
+                <div>
+                    ${data.playerName}
+                    - ${data.score} pts
+                </div>
             `;
 
         }

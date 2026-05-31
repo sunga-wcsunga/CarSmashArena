@@ -187,13 +187,11 @@ canvas{
 
 #leaderboard{
 
-    width: 22vw;
-    min-width: 220px;
-    max-width: 320px;
+    width: 100%;
     background: #111;
     border: 3px solid cyan;
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
 
 }
@@ -209,7 +207,7 @@ canvas{
 
 #leaderboardList{
 
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1.8;
     color: white;
 
