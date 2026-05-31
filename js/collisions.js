@@ -131,7 +131,8 @@ function checkCollisions() {
             }
 
             //respawn
-            respawnEnemy(enemy);
+            enemy.x = Math.random() * (canvas.width - enemy.width);
+            enemy.y = Math.random() * (canvas.height - enemy.height);
 
             //resetmovement
             enemy.velocityX = 0;

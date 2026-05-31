@@ -36,37 +36,6 @@ function createEnemies() {
 
 }
 
-function respawnEnemy(enemy){
-
-    let valid = false;
-
-    while(!valid){
-
-        enemy.x = Math.random() * 800;
-        enemy.y = Math.random() * 400;
-
-        valid = true;
-
-        barriers.forEach((barrier)=>{
-
-            if(
-
-                enemy.x < barrier.x + barrier.width &&
-                enemy.x + enemy.width > barrier.x &&
-                enemy.y < barrier.y + barrier.height &&
-                enemy.y + enemy.height > barrier.y
-
-            ){
-
-                valid = false;
-
-            }
-
-        });
-
-    }
-
-}
 
 function moveEnemies() {
 
